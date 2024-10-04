@@ -7,17 +7,19 @@ class ImageConverter:
         'BMP', 'ICO', 'PDF', 'WEBP'
     ]
 
-    def __init__(self, input_file):
+    def __init__(self, input_file, output_file):
         """
         Initializes the ImageConverter with the given input file.
         """
         self.input_file = input_file
+        self.output_file = output_file
 
         if not os.path.exists(input_file):
             raise FileNotFoundError(f"The file '{input_file}' does not exist.")
 
         try:
             self.image = Image.open(input_file)
+            self.convert(output_file)
         except IOError as e:
             raise IOError(f"Cannot open image file '{input_file}': {e}")
 
@@ -58,7 +60,4 @@ class ImageConverter:
 
     @classmethod
     def get_supported_formats(cls):
-        """
-        Returns a list of supported image formats.
-        """
         return cls.SUPPORTED_FORMATS
